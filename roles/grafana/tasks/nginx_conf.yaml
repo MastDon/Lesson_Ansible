@@ -1,0 +1,25 @@
+---
+- name: Setup nginx proxy
+  include_role:
+    name: nginx
+
+- name: Get certificate
+  include_role:
+    name: letsencrypt
+
+- name: Creating Nginx configs
+  register: nginx_conf_file
+  template:
+    src: "grafana.conf.j2"
+    dest: /etc/nginx/sites-available/grafana.conf
+  notify:
+  - restart Nginx
+
+- name: Creating Nginx symbolic configs
+  register: nginx_conf_file_linc
+  file:
+    src: /etc/nginx/sites-available/grafana.conf
+    dest: /etc/nginx/sites-enabled/grafana.conf
+    state: link
+  notify:
+    - restart Nginx

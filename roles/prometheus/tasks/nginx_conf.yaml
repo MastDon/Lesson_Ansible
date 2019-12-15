@@ -1,0 +1,25 @@
+---
+- name: Setup nginx proxy
+  include_role:
+    name: nginx
+
+- name: Get certificate
+  include_role:
+    name: letsencrypt
+
+- name: Creating Nginx configs
+  register: nginx_conf_file
+  template:
+    src: "prometheus.conf.j2"
+    dest: /etc/nginx/sites-available/prometheus.conf
+  notify:
+  - restart Nginx
+
+- name: Creating Nginx symbolic configs
+  register: nginx_conf_file_linc
+  file:
+    src: /etc/nginx/sites-available/prometheus.conf
+    dest: /etc/nginx/sites-enabled/prometheus.conf
+    state: link
+  notify:
+    - restart Nginx

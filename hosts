@@ -1,0 +1,2 @@
+[aws]
+test ansible_host=18.185.59.17 ansible_port=22 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/key.pem ansible_python_interpreter=/usr/bin/python3 

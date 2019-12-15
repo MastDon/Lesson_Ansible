@@ -1,0 +1,5 @@
+############## default variable ##############
+required_packages:
+  - python-setuptools
+  - python3-pip
+  - docker.io

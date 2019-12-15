@@ -1,0 +1,4 @@
+############## default variable ##############
+admin_email: dmytro.morhul@dev-pro.net
+domain_name: administrarium.pp.ua
+service_name: service

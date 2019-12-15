@@ -1,0 +1,26 @@
+---
+- name: Setup docker
+  include_role:
+    name: docker_tools
+
+- name: Copy Prometheus configs
+  template:
+    src: prometheus.yaml.j2
+    dest: /opt/prometheus.yaml
+
+- name: Run Prometheus container
+  register: prom_container
+  docker_container:
+      name: prometheus
+      image: prom/prometheus
+      network_mode: host
+      restart_policy: always
+      restart: yes
+      volumes: "/opt/prometheus.yaml:/etc/prometheus/prometheus.yml"
+      ports: 
+         - "9090:9090"
+
+- name: Add proxy config
+  include_tasks: nginx_conf.yaml
+  when:
+  - proxied|bool == true

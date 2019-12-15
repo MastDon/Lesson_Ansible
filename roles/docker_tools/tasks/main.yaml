@@ -1,0 +1,17 @@
+---   
+- name: get hostname
+  debug:
+    msg: "{{ inventory_hostname }}" 
+
+- name: install required tools
+  apt:
+    name: "{{ required_packages }}"
+    state: present
+    update_cache: yes
+  loop_control:
+    loop_var: "{{ required_packages }}"
+  register: installed_packages_status  
+
+- name: Install docker using pip
+  pip:
+    name: docker
